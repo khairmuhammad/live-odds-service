@@ -26,7 +26,7 @@ public class ScoreBoard {
      * @throws IllegalArgumentException if one of the teams is already in another match
      */
     public void startMatch(String homeTeam, String awayTeam) {
-        if (matches.containsKey(homeTeam) || matches.containsKey(awayTeam)) {
+        if (homeTeam.equals(awayTeam) || matches.containsKey(homeTeam) || matches.containsKey(awayTeam)) {
             throw new IllegalArgumentException("One team cannot have two matches at the same time.");
         }
         matches.put(homeTeam, new Match(homeTeam, awayTeam));

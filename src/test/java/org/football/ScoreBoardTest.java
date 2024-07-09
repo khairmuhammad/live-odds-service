@@ -5,8 +5,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 // This class contains unit tests for the Scoreboard class.
 public class ScoreBoardTest {
@@ -101,5 +100,93 @@ public class ScoreBoardTest {
         assertEquals("Mexico 0 - Canada 5", summary.get(2).toString());
         assertEquals("Argentina 3 - Australia 1", summary.get(3).toString());
         assertEquals("Germany 2 - France 2", summary.get(4).toString());
+    }
+
+    // Test starting a match with duplicate teams.
+    // Verifies that an exception is thrown if a team is already in another match.
+    @Test
+    public void testStartMatchWithDuplicateTeams() {
+        ScoreBoard scoreboard = new ScoreBoard();
+        scoreboard.startMatch("Mexico", "Canada");
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            scoreboard.startMatch("Mexico", "Brazil");
+        });
+
+        assertEquals("One team cannot have two matches at the same time.", exception.getMessage());
+    }
+
+    // Test starting a match with the same home and away teams.
+    // This test assumes that having the same team as both home and away is invalid.
+    @Test
+    public void testStartMatchWithSameTeams() {
+        ScoreBoard scoreboard = new ScoreBoard();
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            scoreboard.startMatch("Mexico", "Mexico");
+        });
+
+        assertEquals("One team cannot have two matches at the same time.", exception.getMessage());
+    }
+
+    // Test updating the score for a non-existent match.
+    // Verifies that an exception is thrown if the match does not exist.
+    @Test
+    public void testUpdateScoreForNonExistentMatch() {
+        ScoreBoard scoreboard = new ScoreBoard();
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            scoreboard.updateScore("Mexico", 0, "Canada", 5);
+        });
+
+        assertEquals("Match not found.", exception.getMessage());
+    }
+
+    // Test updating the score with incorrect team names.
+    // Verifies that an exception is thrown if the team names do not match any ongoing match.
+    @Test
+    public void testUpdateScoreWithIncorrectTeams() {
+        ScoreBoard scoreboard = new ScoreBoard();
+        scoreboard.startMatch("Mexico", "Canada");
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            scoreboard.updateScore("Spain", 10, "Brazil", 2);
+        });
+
+        assertEquals("Match not found.", exception.getMessage());
+    }
+
+    // Test updating the score with negative values.
+    // Verifies that an exception is thrown if negative scores are provided.
+    @Test
+    public void testUpdateScoreWithNegativeValues() {
+        ScoreBoard scoreboard = new ScoreBoard();
+        scoreboard.startMatch("Mexico", "Canada");
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            scoreboard.updateScore("Mexico", -1, "Canada", 5);
+        });
+
+        assertEquals("Scores cannot be negative.", exception.getMessage());
+
+        exception = assertThrows(IllegalArgumentException.class, () -> {
+            scoreboard.updateScore("Mexico", 0, "Canada", -5);
+        });
+
+        assertEquals("Scores cannot be negative.", exception.getMessage());
+    }
+
+    // Test finishing a non-existent match.
+    // Verifies that the operation does nothing or raises an exception if the match does not exist.
+    @Test
+    public void testFinishNonExistentMatch() {
+        ScoreBoard scoreboard = new ScoreBoard();
+
+        // Attempting to finish a match that does not exist should not affect the scoreboard
+        scoreboard.finishMatch("Mexico");
+
+        // Verify that the scoreboard is still empty
+        List<Match> summary = scoreboard.getSummary();
+        assertTrue(summary.isEmpty());
     }
 }
