@@ -36,21 +36,21 @@ public class ScoreBoard {
      * Updates the score of an ongoing match.
      *
      * @param homeTeam the name of the home team
-     * @param homeScore the new score of the home team
+     * @param homeTeamScore the new score of the home team
      * @param awayTeam the name of the away team
-     * @param awayScore the new score of the away team
+     * @param awayTeamScore the new score of the away team
      * @throws IllegalArgumentException if the match is not found or if scores are negative
      */
-    public void updateScore(String homeTeam, int homeScore, String awayTeam, int awayScore) {
+    public void updateScore(String homeTeam, int homeTeamScore, String awayTeam, int awayTeamScore) {
         Match match = matches.get(homeTeam);
         if (match == null || !match.getAwayTeam().equals(awayTeam)) {
             throw new IllegalArgumentException("Match not found.");
         }
-        if (homeScore < 0 || awayScore < 0) {
+        if (homeTeamScore < 0 || awayTeamScore < 0) {
             throw new IllegalArgumentException("Scores cannot be negative.");
         }
-        match.setHomeTeamScore(homeScore);
-        match.setAwayTeamScore(awayScore);
+        match.setHomeTeamScore(homeTeamScore);
+        match.setAwayTeamScore(awayTeamScore);
     }
 
     /**

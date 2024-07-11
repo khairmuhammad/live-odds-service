@@ -34,19 +34,14 @@ public class ScoreBoardTest {
     // Verifies that updating the score of an ongoing match correctly changes the match score.
     @Test
     public void testUpdateScore() {
-        // Create a new scoreboard instance
         ScoreBoard scoreboard = new ScoreBoard();
 
-        // Start a match between Mexico and Canada
         scoreboard.startMatch("Mexico", "Canada");
 
-        // Update the score of the match
         scoreboard.updateScore("Mexico", 0, "Canada", 5);
 
-        // Get the summary of ongoing matche
         List<Match> summary = scoreboard.getSummary();
 
-        // Verify that the score has been updated correctly
         assertEquals("Mexico 0 - Canada 5", summary.get(0).toString());
     }
 
@@ -54,16 +49,12 @@ public class ScoreBoardTest {
     // Verifies that finishing a match removes it from the scoreboard.
     @Test
     public void testFinishMatch() {
-        // Create a new scoreboard instance
         ScoreBoard scoreboard = new ScoreBoard();
 
-        // Start a match between Mexico and Canada
         scoreboard.startMatch("Mexico", "Canada");
 
-        // Finish the match
         scoreboard.finishMatch("Mexico");
 
-        // Get the summary of ongoing match
         List<Match> summary = scoreboard.getSummary();
 
         // Verify that the match has been removed from the scoreboard
@@ -74,7 +65,6 @@ public class ScoreBoardTest {
     // Verifies that the summary of matches is ordered by total score and start time correctly.
     @Test
     public void testGetSummary() {
-        // Create a new scoreboard instance
         ScoreBoard scoreboard = new ScoreBoard();
 
         // Start multiple matches
