@@ -1,40 +1,45 @@
-package org.football;
+package org.football.model;
 
-// This class represents a football match.
 public class Match {
-    private String homeTeam;
-    private String awayTeam;
+    private String matchId;
+    private String homeTeamName;
+    private String awayTeamName;
     private int homeTeamScore;
     private int awayTeamScore;
     private long matchStartTime;
-
 
     /**
      * Constructor to initialize a match with the given home and away teams.
      * The initial score is set to 0-0 and the start time is recorded.
      *
-     * @param homeTeam the name of the home team
-     * @param awayTeam the name of the away team
+     * @param matchId the id for the match
+     * @param homeTeamName the name of the home team
+     * @param awayTeamName the name of the away team
      */
-    public Match(String homeTeam, String awayTeam) {
-        this.homeTeam = homeTeam;
-        this.awayTeam = awayTeam;
+    public Match(String matchId, String homeTeamName, String awayTeamName) {
+        this.matchId = matchId;
+        this.homeTeamName = homeTeamName;
+        this.awayTeamName = awayTeamName;
         this.homeTeamScore = 0;
         this.awayTeamScore = 0;
         this.matchStartTime = System.currentTimeMillis();
     }
 
-    // Getter methods
-    public String getHomeTeam() {
-        return homeTeam;
+    // Getters method
+    public String getMatchId() {
+        return matchId;
     }
 
-    public String getAwayTeam() {
-        return awayTeam;
+    public String getHomeTeamName() {
+        return homeTeamName;
     }
 
     public int getHomeTeamScore() {
         return homeTeamScore;
+    }
+
+    public String getAwayTeamName() {
+        return awayTeamName;
     }
 
     public int getAwayTeamScore() {
@@ -46,12 +51,9 @@ public class Match {
     }
 
     // Setter methods
-    public void setHomeTeam(String homeTeam) {
-        this.homeTeam = homeTeam;
-    }
-
-    public void setAwayTeam(String awayTeam) {
-        this.awayTeam = awayTeam;
+    public void updateScore(int homeTeamScore, int awayTeamScore) {
+        this.homeTeamScore = homeTeamScore;
+        this.awayTeamScore = awayTeamScore;
     }
 
     public void setHomeTeamScore(int homeTeamScore) {
@@ -69,6 +71,6 @@ public class Match {
 
     @Override
     public String toString() {
-        return homeTeam + " " + homeTeamScore + " - " + awayTeam + " " + awayTeamScore;
+        return homeTeamName + " " + homeTeamScore + " - " + awayTeamName + " " + awayTeamScore;
     }
 }
